@@ -1,6 +1,5 @@
-
-
 import React from "react"
+import { Section } from "../components/common/Section"
 
 export default function Admin() {
     return (

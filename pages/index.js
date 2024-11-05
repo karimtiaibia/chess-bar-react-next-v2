@@ -1,17 +1,6 @@
 'use client'
-
-import styled from 'styled-components';
+import { Section } from "./components/common/Section";
 import Image from "next/image";
-
-const Section = styled.section`
-    display: flex;
-    flex-direction: column;
-`;
-
-const Text = styled.p`
-
-`;
-
 
 export default function Home() {
     return (
