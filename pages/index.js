@@ -27,7 +27,7 @@ export default function Home() {
                 <ul>
                     <li>1. Je m’inscris gratuitement en remplissant le formulaire disponible <a href="register">ici</a>.</li>
                     <li>2. Je suis intégré au WhatsApp de ma ville pour m’inscrire aux différents tournois hebdomadaires. (6 places/tournoi)</li>
-                    <li>3. Je participe à un tournoi hebdomadaire dans un bar partenaire près de chez moi et je marque des points en fonction de mes résultats. (voir <a href="tournois">Tournois à venir</a>)</li>
+                    <li>3. Je participe à un tournoi hebdomadaire dans un bar partenaire près de chez moi et je marque des points en fonction de mes résultats. (voir <a href="tournaments">Tournois à venir</a>)</li>
                     <li>4. Tous les 3 mois, les vainqueurs de chaque bar s’affrontent et tentent de se qualifier pour la finale annuelle qui désignera le nouveau champion ChessBar !</li>
                     <li>N.B: Les parties se jouent en cadence rapide (10 minutes/joueur). Un tournoi dure en général 2 heures.</li>                  
                 </ul>

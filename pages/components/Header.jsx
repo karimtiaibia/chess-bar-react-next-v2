@@ -27,7 +27,7 @@ export default function Header() {
                         <li><Link id="admin" href="/admin">Administration</Link></li>
                     </div>
                     <a className="icon">
-                        <i className="fa fa-bars"></i>
+                        <i className="fa fa-bars" alt="Burger Menu"></i>
                     </a>
                 </nav>
             </div>
