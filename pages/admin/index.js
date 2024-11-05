@@ -1,3 +1,5 @@
+
+
 import React from "react"
 
 export default function Admin() {
@@ -5,13 +7,13 @@ export default function Admin() {
         <>
             <h1>Administration</h1>
 
-            <section id="admin-controls">
+            <Section id="admin-controls">
                 <a href="/admin/bar/add"><button>Ajouter un bar</button></a>
                 <a href="/admin/tournament/add"><button>Ajouter un tournoi</button></a>
                 <a href="/admin/ranking"><button>Gérer les scores</button></a>
-            </section>
+            </Section>
 
-            <section>
+            <Section>
                 <table>
                     <thead>
                         <tr>
@@ -58,7 +60,7 @@ export default function Admin() {
                     </tbody>
                 </table>
                 
-            </section>
+            </Section>
         </>
     )
 };

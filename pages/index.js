@@ -3,7 +3,6 @@
 import styled from 'styled-components';
 import Image from "next/image";
 
-
 const Section = styled.section`
     display: flex;
     flex-direction: column;
@@ -13,10 +12,11 @@ const Text = styled.p`
 
 `;
 
+
 export default function Home() {
     return (
         <>
-            <section className="home-page-welcome">
+            <Section className="home-page-welcome">
                 <Image 
                     src="/img/header.png" 
                     width={350}
@@ -31,8 +31,8 @@ export default function Home() {
                     <li>4. Tous les 3 mois, les vainqueurs de chaque bar s’affrontent et tentent de se qualifier pour la finale annuelle qui désignera le nouveau champion ChessBar !</li>
                     <li>N.B: Les parties se jouent en cadence rapide (10 minutes/joueur). Un tournoi dure en général 2 heures.</li>                  
                 </ul>
-            </section>
-            <section className="home-partners">
+            </Section>
+            <Section className="home-partners">
                 <h2>Nos Partenaires</h2>
                 <div className="home-partners-logos">
                     <div>
@@ -56,7 +56,7 @@ export default function Home() {
                         </a>
                     </div>
                 </div>
-            </section>
+            </Section>
         </>
     );
 }
