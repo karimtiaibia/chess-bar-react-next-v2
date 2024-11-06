@@ -1,10 +1,12 @@
 'use client'
 import { Section } from "./components/common/Section";
 import Image from "next/image";
+import Searchbar from "./components/Searchbar";
 
 export default function Home() {
     return (
         <>
+            <Searchbar />
             <Section className="home-page-welcome">
                 <Image 
                     src="/img/header.png" 
@@ -26,12 +28,12 @@ export default function Home() {
                 <div className="home-partners-logos">
                     <div>
                         <a href="https://www.krcimmo.fr/">
-                                <Image 
-                                    src="/img/krc-logo-small.jpg" 
-                                    width={500}
-                                    height={400}
-                                    alt="Logo de l'entreprise KRC" 
-                                />
+                            <Image 
+                                src="/img/krc-logo-small.jpg" 
+                                width={500}
+                                height={400}
+                                alt="Logo de l'entreprise KRC" 
+                            />
                         </a>
                     </div>
                     <div>
