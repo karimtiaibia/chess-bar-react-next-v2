@@ -71,6 +71,8 @@ const CardInfos = styled.div`
     }
 `;
 
+
+
 export default function Searchbar({ bars }) {
     const [hoveredCard, setHoveredCard] = useState(null);
 

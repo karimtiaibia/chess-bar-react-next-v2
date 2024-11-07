@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import * as _var from "@/styles/variables";
+import { FaFacebook, FaInstagram, FaMailBulk } from "react-icons/fa";
 
 const StyledFooter = styled.footer`
     display: flex;
@@ -26,13 +27,13 @@ export default function Footer() {
                 <a
                     href="https://www.facebook.com/profile.php?id=100094132932723"
                     target="_blank">
-                    Facebook
+                    <FaFacebook />
                 </a>
                 <a href="https://www.instagram.com/chess___bar/" target="_blank">
-                    Instagram
+                    <FaInstagram />
                 </a>
                 <a href="mailto: contact@chessbar.fr" target="_blank">
-                    Email
+                    <FaMailBulk />
                 </a>
             </Socials>
             <span>© 2024 Chess Bar. All rights reserved.</span>

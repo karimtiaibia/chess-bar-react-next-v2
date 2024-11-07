@@ -4,7 +4,7 @@ import { Button } from "../components/common/Button"
 
 export default function Register() {
     return (
-        <>
+        <div className="register">
             <H1>Inscription</H1>
             <form action="/register" method="POST" >
                 <label for="pseudo">Pseudo : </label>
@@ -18,6 +18,6 @@ export default function Register() {
                 
                 <Button id="submitRegister">Créer mon compte</Button>
             </form>
-        </>
+        </div>
     )
 };
