@@ -20,11 +20,11 @@ export default function Home() {
                 <input value="" id="city" type="text" name="city" />
 
                 <button>Mettre à jour mon compte</button>
-                {/* <% if (typeof message !== 'undefined' && message) { %>
+                if (typeof message !== 'undefined' && message) {
                     <div class="alert alert-success">
-                        <%= message %>
+                        message
                     </div>
-                <% } %> */}
+                }
                 
             </form>
         </>

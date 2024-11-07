@@ -1,24 +1,41 @@
 import React from "react";
+import styled from "styled-components";
+import * as _var from "@/styles/variables";
+
+const StyledFooter = styled.footer`
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    background: white;
+
+    & span {
+        color: ${_var.primary};
+    }
+`;
+
+const Socials = styled.div`
+    display: flex;
+    gap: 8px;
+`;
 
 export default function Footer() {
     return (
-        <footer>
-            <div className="contact-social">
-                <div className="social">
-                    <h2>Nous suivre</h2>
-                    <div className="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=100094132932723">Page Facebook</a>
-                        <a href="https://www.instagram.com/chessbar33/">Page Instagram</a>
-                    </div>
-                </div>
-                <div className="contact">
-                    <h2>Contact</h2>
-                    <p>contact@chessbar.fr</p>
-                </div>
-            </div>
-            <div className="copyright">
-                <p>© 2024 Chess Bar. All rights reserved.</p>
-            </div>
-        </footer>
-    )
+        <StyledFooter>
+            <Socials>
+                <a
+                    href="https://www.facebook.com/profile.php?id=100094132932723"
+                    target="_blank">
+                    Facebook
+                </a>
+                <a href="https://www.instagram.com/chessbar33/" target="_blank">
+                    Instagram
+                </a>
+                <a href="mailto: contact@chessbar.fr" target="_blank">
+                    Email
+                </a>
+            </Socials>
+            <span>© 2024 Chess Bar. All rights reserved.</span>
+        </StyledFooter>
+    );
 }

@@ -1,10 +1,13 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
-const db = await mysql.createConnection({
-    host: "localhost", // on rentre l'hôte, l'adresse url où se trouve la BDD
-    database: "chess_bar", // le nom de la BDD
-    user: "root", // l'identifiant de la BDD
-    password: "root", // le mot de passe
-})
+const database = mysql.createPool({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    waitForConnections: true,
+    connectionLimit: 5, 
+    queueLimit: 0,
+});
 
-export default db;
+export default database;

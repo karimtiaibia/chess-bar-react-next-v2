@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import * as _var from "../../../styles/variables";
 
-export const Section = styled.section`
+export const Ul = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: ${_var.space_L};
+  gap: ${_var.space_XS};
 `;

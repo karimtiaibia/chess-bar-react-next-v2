@@ -1,16 +1,9 @@
-import { GlobalStyles } from '@/lib/GlobalStyles';
-import { StyledComponentsRegistry } from '@/lib/StyledComponentsRegistry';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Layout from "./components/Layout";
+
 export default function MyApp({ Component, pageProps }) {
-    return (
-        <StyledComponentsRegistry>
-            <GlobalStyles />
-            <>
-                <Header />
-                <Component {...pageProps} />
-                <Footer />
-            </>
-        </StyledComponentsRegistry>
-    );
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
