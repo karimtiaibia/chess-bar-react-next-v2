@@ -147,22 +147,22 @@ const AltNavList = styled.ul`
 
 const Menu = ({ active }) => {
     return (
-    <MenuContainer $active={active}>
-        <AltNav>
-            <AltNavList style={{ flexDirection: "column" }}>
-                <Li>
-                    <Link id="tournaments" href="/tournaments">
-                        Tournois à venir
-                    </Link>
-                </Li>
-                <Li>
-                    <Link id="rules" href="/rules">
-                        Règlement
-                    </Link>
-                </Li>
-            </AltNavList>
-        </AltNav>
-    </MenuContainer>
+        <MenuContainer $active={active}>
+            <AltNav>
+                <AltNavList style={{ flexDirection: "column" }}>
+                    <Li>
+                        <Link id="tournaments" href="/tournaments">
+                            Tournois à venir
+                        </Link>
+                    </Li>
+                    <Li>
+                        <Link id="rules" href="/rules">
+                            Règlement
+                        </Link>
+                    </Li>
+                </AltNavList>
+            </AltNav>
+        </MenuContainer>
     );
 };
 

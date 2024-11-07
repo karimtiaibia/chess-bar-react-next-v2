@@ -71,11 +71,11 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() {
-  const [bars] = await database.query(`SELECT * FROM bar`);
+    const [bars] = await database.query(`SELECT * FROM bar`);
 
-  return {
-    props: {
-      data: serializedDate(bars),
-    },
-  };
+    return {
+        props: {
+            data: serializedDate(bars),
+        },
+    };
 }

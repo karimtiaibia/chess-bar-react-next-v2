@@ -28,7 +28,7 @@ export default function Footer() {
                     target="_blank">
                     Facebook
                 </a>
-                <a href="https://www.instagram.com/chessbar33/" target="_blank">
+                <a href="https://www.instagram.com/chess___bar/" target="_blank">
                     Instagram
                 </a>
                 <a href="mailto: contact@chessbar.fr" target="_blank">
