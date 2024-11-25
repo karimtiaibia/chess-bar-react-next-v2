@@ -7,10 +7,10 @@ export default function Login() {
         <div className="login">
             <H1>Connexion</H1>
             <form action="/login" method="POST">
-                <label for="pseudo">Pseudo : </label>
+                <label htmlFor="pseudo">Pseudo : </label>
                 <input id="pseudo" type="text" name="pseudo" required />
                 
-                <label for="password">Mot de passe : </label>
+                <label htmlFor="password">Mot de passe : </label>
                 <input id="password" type="password" name="password" required />
 
                 <p><a href="/register">Pas encore de compte ? Inscrivez-vous !</a></p>

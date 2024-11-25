@@ -1,23 +1,23 @@
-import React from "react"
-import { H1 } from "../components/common/Typefaces"
-import { Button } from "../components/common/Button"
+import RegisterForm from '../components/common/RegisterForm';
+import Link from 'next/link'
 
-export default function Register() {
-    return (
-        <div className="register">
-            <H1>Inscription</H1>
-            <form action="/register" method="POST" >
-                <label for="pseudo">Pseudo : </label>
-                <input required id="pseudo" type="pseudo" name="pseudo" />
-
-                <label for="email">Email : </label>
-                <input required id="email" type="email" name="email" />
-                
-                <label for="password">Mot de passe : </label>
-                <input required id="password" type="password" name="password" />
-                
-                <Button id="submitRegister">Créer mon compte</Button>
-            </form>
-        </div>
-    )
+export const Metadata = {
+    title: 'S\'inscrire',
 };
+
+export default function Login() {
+    return (
+        <main className="flex items-center justify-center md:h-screen">
+            <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
+                <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
+                    <div className="w-32 text-white md:w-36">
+                        <Link href="/">
+                            Chess Bar
+                        </Link>
+                    </div>
+                </div>
+                <RegisterForm />
+            </div>
+        </main>
+    );
+}
