@@ -1,9 +1,9 @@
 'use client';
-import React, { useState } from 'react';
-//import { useFormState, useFormStatus } from 'react-dom';
+
+import { useState } from 'react';
 import { register } from '@/lib/actions';
 import { H1 } from './Typefaces';
-import RegisterButton from './RegisterButton';
+import { Button } from './Button';
 // Imported icons
 import { CiUser, CiAt } from "react-icons/ci";
 import { PiKey } from "react-icons/pi";
@@ -21,38 +21,38 @@ export default function RegisterForm() {
     };
     
     return (
-        <form onSubmit={formAction} className="register-form">
+        <form action={formAction} className="space-y-3">
             <div>
                 <H1>
                     S'inscrire
                 </H1>
                 <div>
-                    <div className="name-container">
+                    <div>
                         <label
-                            className="name-label"
-                            htmlFor="name">
-                            Nom
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            htmlFor="pseudo">
+                            Pseudo
                         </label>
                         <div className="relative">
                             <input
-                                className="name-input"
+                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="name"
                                 type="text"
-                                name="name"
-                                placeholder="Entrez votre nom"
+                                name="pseudo"
+                                placeholder="Entrez votre pseudo"
                                 required />
                             <CiUser />
                         </div>
                     </div>
-                    <div className="email-container">
+                    <div>
                         <label
-                            className="email-label"
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
                             htmlFor="email">
                             Email
                         </label>
                         <div className="relative">
                             <input
-                                className="email-input"
+                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="email"
                                 type="email"
                                 name="email"
@@ -61,15 +61,15 @@ export default function RegisterForm() {
                             <CiAt />
                         </div>
                     </div>
-                    <div className="password-container">
+                    <div className="mt-4">
                         <label
-                            className="password-label"
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
                             htmlFor="password">
-                            Mot de passe
+                            Password
                         </label>
                         <div className="relative">
                             <input
-                                className="password-input"
+                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="password"
                                 type="password"
                                 name="password"
@@ -79,19 +79,19 @@ export default function RegisterForm() {
                             <PiKey />
                         </div>
                     </div>
-                    <div className="password-confirm-container">
+                    <div className="mt-4">
                         <label
-                            className="password-confirm-label"
-                            htmlFor="password-confirm">
-                            Confimer mot de passe
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            htmlFor="confirm-password">
+                            Confirm Password
                         </label>
                         <div className="relative">
                             <input
-                                className="password-confirm-input"
-                                id="password-confirm"
+                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                id="confirm-password"
                                 type="password"
-                                name="passwordConfirm"
-                                placeholder="Entrer votre mot de passe"
+                                name="confirm-password"
+                                placeholder="Enter password"
                                 required
                                 minLength={6} />
                             <PiKey />
@@ -100,13 +100,13 @@ export default function RegisterForm() {
                 </div>
                 <RegisterButton />
                 <div
-                    className="error-message-container"
+                    className="flex h-8 items-end space-x-1"
                     aria-live="polite"
                     aria-atomic="true">
                     {errorMessage && (
                         <>
                             <AiOutlineExclamationCircle />
-                            <p className="error-message">{errorMessage}</p>
+                            <p className="text-sm text-red-500">{errorMessage}</p>
                         </>
                     )}
                 </div>
@@ -114,3 +114,14 @@ export default function RegisterForm() {
         </form>
     );
 }
+
+function RegisterButton() {
+    const [pending, setPending] = useState(false);
+
+    return (
+        <Button className="mt-4 w-full" aria-disabled={pending}>
+            Register
+        </Button>
+    );
+}
+
