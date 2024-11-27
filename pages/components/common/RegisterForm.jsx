@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { register } from '@/lib/actions';
+// Styles
 import { H1 } from './Typefaces';
 import { Button } from './Button';
 // Imported icons
@@ -21,7 +22,7 @@ export default function RegisterForm() {
     };
     
     return (
-        <form action={formAction} className="space-y-3">
+        <form onSubmit={formAction} className="register-form">
             <div>
                 <H1>
                     S'inscrire
@@ -29,17 +30,17 @@ export default function RegisterForm() {
                 <div>
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                            htmlFor="pseudo">
-                            Pseudo
+                            className="name-label"
+                            htmlFor="name">
+                            Nom
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="name-input"
                                 id="name"
                                 type="text"
-                                name="pseudo"
-                                placeholder="Entrez votre pseudo"
+                                name="name"
+                                placeholder="Entrez votre nom"
                                 required />
                             <CiUser />
                         </div>
@@ -65,7 +66,7 @@ export default function RegisterForm() {
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
                             htmlFor="password">
-                            Password
+                            Mot de passe
                         </label>
                         <div className="relative">
                             <input
@@ -73,7 +74,7 @@ export default function RegisterForm() {
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="Entrez votre mot de passe"
                                 required
                                 minLength={6} />
                             <PiKey />
@@ -83,7 +84,7 @@ export default function RegisterForm() {
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
                             htmlFor="confirm-password">
-                            Confirm Password
+                            Confirmer le mot de passe
                         </label>
                         <div className="relative">
                             <input
@@ -91,7 +92,7 @@ export default function RegisterForm() {
                                 id="confirm-password"
                                 type="password"
                                 name="confirm-password"
-                                placeholder="Enter password"
+                                placeholder="Confirmez votre mot de passe"
                                 required
                                 minLength={6} />
                             <PiKey />
@@ -100,13 +101,13 @@ export default function RegisterForm() {
                 </div>
                 <RegisterButton />
                 <div
-                    className="flex h-8 items-end space-x-1"
+                    className="error-message-container"
                     aria-live="polite"
                     aria-atomic="true">
                     {errorMessage && (
                         <>
                             <AiOutlineExclamationCircle />
-                            <p className="text-sm text-red-500">{errorMessage}</p>
+                            <p className="error-message">{errorMessage}</p>
                         </>
                     )}
                 </div>
@@ -119,9 +120,8 @@ function RegisterButton() {
     const [pending, setPending] = useState(false);
 
     return (
-        <Button className="mt-4 w-full" aria-disabled={pending}>
-            Register
+        <Button className="register-button" aria-disabled={pending}>
+            S'inscrire
         </Button>
     );
 }
-
