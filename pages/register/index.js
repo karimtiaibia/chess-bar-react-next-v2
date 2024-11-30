@@ -1,6 +1,5 @@
 import RegisterForm from '../components/common/RegisterForm';
 import Link from 'next/link'
-
 export const Metadata = {
     title: 'S\'inscrire',
 };
