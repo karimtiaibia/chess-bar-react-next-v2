@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import register from '@/lib/actions';
+import { register } from '@/lib/actions';
 // Styles
 import { H1 } from './Typefaces';
 import { Button } from './Button';
