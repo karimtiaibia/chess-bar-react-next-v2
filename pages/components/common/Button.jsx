@@ -29,7 +29,7 @@ export const Button = styled.button`
     }
 
     @media (min-width: 768px) {
-        .button-74 {
+        .register-button {
             min-width: 120px;
             padding: 0 25px;
         }
