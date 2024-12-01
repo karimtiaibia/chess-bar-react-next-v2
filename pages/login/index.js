@@ -1,21 +1,41 @@
-import React from "react"
+
+import React, { useState } from 'react'
+// Imported style
 import { H1 } from "../components/common/Typefaces"
 import { Button } from "../components/common/Button"
 
-export default function Login() {
-    return (
-        <div className="login">
-            <H1>Connexion</H1>
-            <form action="/login" method="POST">
-                <label htmlFor="pseudo">Pseudo : </label>
-                <input id="pseudo" type="text" name="pseudo" required />
-                
-                <label htmlFor="password">Mot de passe : </label>
-                <input id="password" type="password" name="password" required />
+const Login = (props) => {
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
-                <p><a href="/register">Pas encore de compte ? Inscrivez-vous !</a></p>
-                <Button>Connexion</Button>
-            </form>
-        </div>
+    return (
+        <div className={'login-container'}>
+            <div className={'login-title-container'}>
+                <H1>Login</H1>
+            </div>
+            <div className={'login-name-container'}>
+                <input
+                    value={name}
+                    placeholder="Entrez votre nom"
+                    onChange={(ev) => setName(ev.target.value)}
+                    className={'login-input-name'}
+                />
+                <label className="errorLabel">{emailError}</label>
+            </div>
+            <div className={'login-password-container'}>
+                <input
+                    value={password}
+                    placeholder="Entrez votre mot de passe"
+                    onChange={(ev) => setPassword(ev.target.value)}
+                    className={'login-input-password'}
+                />
+                <label className="errorLabel">{passwordError}</label>
+            </div>
+            <Button className={'login-button'} type="button" value={'Se connecter'} />
+        </div>  
     )
-};
+}
+
+export default Login

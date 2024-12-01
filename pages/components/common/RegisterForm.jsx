@@ -26,7 +26,7 @@ export const register = async (formData) => {
 
     if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Registration failed");
+        throw new Error(errorData.error || "Echec de l'inscription.");
     }
 
     return response.json();
@@ -34,16 +34,20 @@ export const register = async (formData) => {
 
 export default function RegisterForm() {
     const [errorMessage, setErrorMessage] = useState("");
-    const [pending, setPending] = useState(false);
+    const [pending, setPending] = useState("");
     const formAction = async (event) => {
         event.preventDefault();
+        setPending(true);
+        setErrorMessage("");
+        const formData = new FormData(event.target);
         try {
-            await register(event.target);
+            await register(formData);
         } catch (error) {
             setErrorMessage(error.message);
         } finally {
             setPending(false);
         }
+        
     };
 
     return (

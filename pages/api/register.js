@@ -16,31 +16,28 @@ export default async function handler(req, res) {
     }
 
     const validatedFields = RegisterUser.safeParse(req.body);
-
     if (!validatedFields.success) {
-        return res.status(400).json({ error: "Invalid input", details: validatedFields.error });
+        return res.status(400).json({ error: "Champ invalide.", details: validatedFields.error });
     }
 
     const { name, email, password, confirmPassword } = validatedFields.data;
-
     if (password !== confirmPassword) {
-        return res.status(400).json({ error: "Passwords do not match" });
+        return res.status(400).json({ error: "Les mots de passe ne correspondent pas." });
     }
-
+    
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const id = uuidv4();
-
         await database.execute(`
                 INSERT INTO user (id, name, email, password) 
                 VALUES (?, ?, ?, ?)
             `,
             [id, name, email, hashedPassword]
         );
-
-        return res.status(201).json({ message: "User registered successfully" });
+        return res.status(201).json({ message: "Utilisateur inscrit avec succès." });
+        
     } catch (error) {
         console.error("Database error:", error);
-        return res.status(500).json({ error: "Database error" });
+        return res.status(500).json({ error: "Erreur de la base de données." });
     }
 }
