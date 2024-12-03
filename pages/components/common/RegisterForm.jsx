@@ -127,7 +127,7 @@ export default function RegisterForm() {
                     type="submit"
                     pending={pending}
                     aria-disabled={pending}>
-                    {pending ? "Inscription en cours..." : "S'inscrire"}
+                        {pending ? "Inscription en cours..." : "S'inscrire"}
                 </Button>
                 <div
                     className="error-message-container"

@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { H1 } from "../components/common/Typefaces"
 import { Button } from "../components/common/Button"
 
-const Login = (props) => {
+export default function Login (props) {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState('')
@@ -33,9 +33,12 @@ const Login = (props) => {
                 />
                 <label className="errorLabel">{passwordError}</label>
             </div>
-            <Button className={'login-button'} type="button" value={'Se connecter'} />
+            <Button 
+                className={'login-button'} 
+                type="submit" 
+                value={'Se connecter'} >
+            </Button>
         </div>  
     )
 }
 
-export default Login

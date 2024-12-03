@@ -81,7 +81,7 @@ export default function Searchbar({ bars }) {
             <Section>
                 <Search>
                     <InputTitle>Rechercher lieu, bar, ville...</InputTitle>
-                    <Input id="searchbar" placeholder="Rechercher..." />
+                    <Input id="searchbar" />
                 </Search>
             </Section>
             <Section style={{ background: `${_var.grayscale[100]}` }}>

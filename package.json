@@ -22,8 +22,5 @@
   "devDependencies": {
     "eslint": "^9",
     "eslint-config-next": "15.0.3"
-  },
-  "browser": {
-    "child_process": false
   }
 }

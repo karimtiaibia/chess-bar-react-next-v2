@@ -3,7 +3,7 @@ import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 
-const RegisterUser = z.object({
+const UserRegister = z.object({
     name: z.string(),
     email: z.string().email(),
     password: z.string(),
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const validatedFields = RegisterUser.safeParse(req.body);
+    const validatedFields = UserRegister.safeParse(req.body);
     if (!validatedFields.success) {
         return res.status(400).json({ error: "Champ invalide.", details: validatedFields.error });
     }
