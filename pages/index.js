@@ -1,15 +1,18 @@
 import React from "react";
+import Image from "next/image";
 import * as _var from "../styles/variables";
 
 import database from "@/_database";
 import serializedDate from "@/lib/serializeDate";
 
+import Searchbar, { Placeholder } from "./components/Searchbar";
 import { Section } from "./components/common/Section";
-import { Ul } from "./components/common/Ul";
 import { H1 } from "./components/common/Typefaces";
-import Searchbar from "./components/Searchbar";
+import { Ul } from "./components/common/Ul";
+import { Cards, Card } from "./components/Searchbar";
 
-export default function Home({ data }) {
+export default function Home({ data, users }) {
+    
     return (
         <>
             <Searchbar bars={data} />
@@ -41,41 +44,51 @@ export default function Home({ data }) {
                     </li>
                 </Ul>
             </Section>
-            {/* <Section>
+            <Section>
                 <h2>Nos Partenaires</h2>
-                <div>
+                <Cards>
                     <Card>
                         <a href="https://www.krcimmo.fr/">
-                            <Image
-                                src="/img/krc-logo-small.jpg"
-                                width={500}
-                                height={400}
-                                alt="Logo de l'entreprise KRC"
-                            />
+                            <Placeholder>
+                                <Image
+                                    src="/img/krc-logo-small.jpg"
+                                    fill
+                                    size="auto"
+                                    priority={false}
+                                    alt="Logo de l'entreprise KRC" 
+                                />
+                            </Placeholder>
                         </a>
                     </Card>
-                    <div>
-                        <a href="https://www.les-ptitsmatelots.fr/">
-                            <Image
-                                src="/img/lpm-logo.png"
-                                width={500}
-                                height={400}
-                                alt="Logo de l'entreprise Les Ptits Matelots"
-                            />
-                        </a>
-                    </div>
-                </div>
-            </Section> */}
+                    <Card>
+                        <>
+                            <a href="https://www.les-ptitsmatelots.fr/">
+                                <Placeholder>
+                                    <Image
+                                        src="/img/lpm-logo.png"
+                                        fill
+                                        size="auto"
+                                        priority={false}
+                                        alt="Logo de l'entreprise Les Ptits Matelots" 
+                                    />
+                                </Placeholder>
+                            </a>
+                        </>
+                    </Card>
+                </Cards>
+            </Section>
         </>
     );
 }
 
 export async function getServerSideProps() {
     const [bars] = await database.query(`SELECT * FROM bar`);
-
+    const [users] = await database.query(`SELECT * FROM user`);
     return {
         props: {
-            data: serializedDate(bars),
+            data: serializedDate(bars), 
+            users: serializedDate(users),
+
         },
     };
 }

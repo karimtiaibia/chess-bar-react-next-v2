@@ -1,4 +1,7 @@
+
+// Importing database
 import database from "../../_database";
+// Validating, id attribute & password hash
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
@@ -10,7 +13,7 @@ const UserRegister = z.object({
     confirmPassword: z.string(),
 });
 
-export default async function handler(req, res) {
+export default async function registerHandler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -34,10 +37,12 @@ export default async function handler(req, res) {
             `,
             [id, name, email, hashedPassword]
         );
-        return res.status(201).json({ message: "Utilisateur inscrit avec succès." });
+        res.redirect('/login')
+        return res.status(201).json({ message: "Utilisateur enregistré avec succès." });
         
     } catch (error) {
         console.error("Database error:", error);
         return res.status(500).json({ error: "Erreur de la base de données." });
     }
+    
 }

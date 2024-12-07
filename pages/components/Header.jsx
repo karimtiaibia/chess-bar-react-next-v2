@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 
 import * as _var from "../../styles/variables";
 
-import { isAuthenticated, isAdmin } from "@/_middlewares";
+import { isAuthenticated, isAdmin } from "../../_middlewares"
 
 const menuTiming = "150ms";
 
@@ -173,7 +173,11 @@ export default function Header() {
     return (
         <StyledHeader>
             <Logo href="/">
-                <Image src="/img/logo.png" fill alt="Logo de Chess Bar" />
+                <Image 
+                    src="/img/logo.png" 
+                    fill 
+                    priority={false}
+                    alt="Logo de Chess Bar" />
             </Logo>
             <Nav>
                 <NavList id="links">

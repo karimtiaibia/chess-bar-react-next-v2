@@ -5,30 +5,30 @@ import * as _var from "@/styles/variables";
 
 import { Section } from "./common/Section";
 
-const Search = styled.div`
+export const Search = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${_var.space_XS};
 `;
 
-const InputTitle = styled.p`
+export const InputTitle = styled.p`
     padding: 0px ${_var.space_XS};
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
     background: rgba(0, 0, 0, 0.05);
     padding: ${_var.space_S} ${_var.space_S};
     border: none;
     border-radius: ${_var.space_XS};
 `;
 
-const Cards = styled.div`
+export const Cards = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: ${_var.space_S};
 `;
 
-const Card = styled.a`
+export const Card = styled.a`
     display: flex;
     flex-direction: column;
     padding: ${_var.space_M};
@@ -45,7 +45,7 @@ const Card = styled.a`
     }
 `;
 
-const Placeholder = styled.div`
+export const Placeholder = styled.div`
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -58,7 +58,7 @@ const Placeholder = styled.div`
     }
 `;
 
-const CardInfos = styled.div`
+export const CardInfos = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${_var.space_XS};
@@ -71,11 +71,9 @@ const CardInfos = styled.div`
     }
 `;
 
-
-
 export default function Searchbar({ bars }) {
     const [hoveredCard, setHoveredCard] = useState(null);
-
+        
     return (
         <>
             <Section>
@@ -98,6 +96,8 @@ export default function Searchbar({ bars }) {
                                 <Image
                                     src={`/img/${bar.logo}`}
                                     fill
+                                    size="auto"
+                                    priority={false}
                                     alt={`Logo du bar ${bar.name}`}
                                 />
                             </Placeholder>

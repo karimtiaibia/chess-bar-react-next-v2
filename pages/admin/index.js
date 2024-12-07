@@ -1,11 +1,12 @@
 import React from "react"
+
 import { Section } from "../components/common/Section"
+import { H1, H2 } from "../components/common/Typefaces"
 
 export default function Admin() {
     return (
-        <>
-            <h1>Administration</h1>
-
+        <Section>
+            <H1>Administration</H1>
             <Section id="admin-controls">
                 <a href="/admin/bar/add"><button>Ajouter un bar</button></a>
                 <a href="/admin/tournament/add"><button>Ajouter un tournoi</button></a>
@@ -22,18 +23,19 @@ export default function Admin() {
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <h2>Bars</h2>
-                        {/* <% for (const bar of bars) { %> 
+                        <H2>Bars</H2>
+                        {/* {bars.map((bar) => (
                             <tr>
-                                <td><%= bar.name %> <%= ' (' %><%= bar.city %> <%= ' - '%> <%= bar.zipcode %><%= ')' %></td>
-                                <td><%= (new Date(bar.register_date)).toLocaleDateString('fr-FR') %></td>
+                                <td>{ bar.name }{ bar.city }{ bar.zipcode }</td>
+                                <td>{ (new Date(bar.register_date)).toLocaleDateString('fr-FR') }</td>
                                 <td>
-                                    <a href="/admin/bar/<%= bar.id %>/delete"><button>Supprimer</button></a>
-                                    <a href="/admin/bar/<%= bar.id %>/edit"><button>Modifier</button></a>
+                                    <a href='/admin/bar/{bar.id}/delete'>
+                                        <button>Supprimer</button>
+                                    </a>
+                                    <a href="/admin/bar/{bar.id}/edit"><button>Modifier</button></a>
                                 </td>
                             </tr>
-                        <% } %> */}
+                        ))} */}
                     </tbody>
                 </table>
                 <table>
@@ -60,6 +62,6 @@ export default function Admin() {
                 </table>
                 
             </Section>
-        </>
+        </Section>
     )
 };
