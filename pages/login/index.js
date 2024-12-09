@@ -6,12 +6,13 @@ import { Section } from '../components/common/Section';
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 export const login = async (formData) => {
+    
     const payload = {
         name: formData.get("name"),
         password: formData.get("password"),
     };
-    
-    console.log("Payload envoyé : ", payload); // Ajoutez ceci pour vérifier
+
+    //console.log("Payload envoyé : ", payload);
 
     if (!payload.name || !payload.password) {
         throw new Error("Tous les champs sont obligatoires.");
@@ -31,16 +32,12 @@ export const login = async (formData) => {
     }
 };
 
-
-
 export default function Login() {
        
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [pending, setPending] = useState(false);
-    
-   
     
     const formAction = async (event) => {
         event.preventDefault();

@@ -79,11 +79,13 @@ export default function Home({ data, users }) {
             </Section>
         </>
     );
+    
 }
 
 export async function getServerSideProps() {
     const [bars] = await database.query(`SELECT * FROM bar`);
     const [users] = await database.query(`SELECT * FROM user`);
+    
     return {
         props: {
             data: serializedDate(bars), 
