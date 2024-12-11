@@ -3,19 +3,22 @@ import database from "@/_database"
 import serializedDate from "@/lib/serializeDate"
 
 import { Section } from "../components/common/Section"
-import { H1, H2, Table, Thead, Tr, Th, Td, TableContainer, ActionTd } from "../components/common/Typefaces"
-import { Button } from "../components/common/Button"
+import { 
+    H1, H2, Button,
+    Table, Thead, Tr, Th, Td, TableContainer, ActionTd, 
+    Control
+} from "../components/common/Typefaces"
 
 export default function Admin({ bars, users, tournaments }) {
 
     return (
         <Section>
             <H1>Administration</H1>
-            <Section id="admin-controls">
+            <Control id="admin-controls">
                 <a href="/admin/bar"><Button>Ajouter un bar</Button></a>
                 <a href="/admin/tournament"><Button>Ajouter un tournoi</Button></a>
                 <a href="/admin/ranking"><Button>Gérer les scores</Button></a>
-            </Section>
+            </Control>
 
             <TableContainer>
                 <Table>

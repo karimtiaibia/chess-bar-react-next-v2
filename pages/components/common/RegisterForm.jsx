@@ -4,6 +4,11 @@ import { useState } from "react";
 import { H1 } from "./Typefaces";
 import { Button } from "./Button";
 import { Section } from "./Section";
+// Form style
+import { 
+    Form, Label
+} from "../components/common/Typefaces"
+
 // Imported icons
 import { CiUser, CiAt } from "react-icons/ci";
 import { PiKey } from "react-icons/pi";
@@ -52,14 +57,14 @@ export default function RegisterForm() {
     
     return (
         <Section>
-            <form onSubmit={formAction} className="register-form">
+            <Form onSubmit={formAction} className="register-form">
                 <div>
                     <H1>S'inscrire</H1>
                     <div>
                         <div>
-                            <label className="name-label" htmlFor="name">
+                            <Label className="name-label" htmlFor="name">
                                 Nom
-                            </label>
+                            </Label>
                             <div className="relative">
                                 <input
                                     className="name-input"
@@ -73,9 +78,9 @@ export default function RegisterForm() {
                             </div>
                         </div>
                         <div>
-                            <label className="" htmlFor="email">
+                            <Label className="" htmlFor="email">
                                 Email
-                            </label>
+                            </Label>
                             <div className="relative">
                                 <input
                                     className=""
@@ -89,9 +94,9 @@ export default function RegisterForm() {
                             </div>
                         </div>
                         <div className="mt-4">
-                            <label className="" htmlFor="password">
+                            <Label className="" htmlFor="password">
                                 Mot de passe
-                            </label>
+                            </Label>
                             <div className="relative">
                                 <input
                                     className=""
@@ -106,9 +111,9 @@ export default function RegisterForm() {
                             </div>
                         </div>
                         <div className="mt-4">
-                            <label className="" htmlFor="confirm-password">
+                            <Label className="" htmlFor="confirm-password">
                                 Confirmer le mot de passe
-                            </label>
+                            </Label>
                             <div className="relative">
                                 <input
                                     className=""
@@ -143,7 +148,7 @@ export default function RegisterForm() {
                         )}
                     </div>
                 </div>
-            </form>
+            </Form>
         </Section>
     );
 }
