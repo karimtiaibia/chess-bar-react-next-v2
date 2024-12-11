@@ -12,8 +12,6 @@ export const login = async (formData) => {
         password: formData.get("password"),
     };
 
-    //console.log("Payload envoyé : ", payload);
-
     if (!payload.name || !payload.password) {
         throw new Error("Tous les champs sont obligatoires.");
     }
@@ -33,7 +31,7 @@ export const login = async (formData) => {
 };
 
 export default function Login() {
-       
+    
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');

@@ -29,7 +29,7 @@ export const register = async (formData) => {
         const errorData = await response.json();
         throw new Error(errorData.error || "Echec de l'inscription.");
     }
-
+    
 };
 
 export default function RegisterForm() {

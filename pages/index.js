@@ -11,11 +11,11 @@ import { H1 } from "./components/common/Typefaces";
 import { Ul } from "./components/common/Ul";
 import { Cards, Card } from "./components/Searchbar";
 
-export default function Home({ data, users }) {
+export default function Home({ bars, users, tournaments }) {
     
     return (
         <>
-            <Searchbar bars={data} />
+            <Searchbar bars={bars} users={users} tournaments={tournaments} />
             <Section>
                 <H1>ChessBar comment ça marche ?</H1>
                 <Ul>
@@ -83,14 +83,16 @@ export default function Home({ data, users }) {
 }
 
 export async function getServerSideProps() {
-    const [bars] = await database.query(`SELECT * FROM bar`);
+    
+    const [bars] = await database.query(`SELECT * FROM bar`)
     const [users] = await database.query(`SELECT * FROM user`);
+    const [tournaments] = await database.query(`SELECT * FROM tournament`)
     
     return {
         props: {
-            data: serializedDate(bars), 
+            bars: serializedDate(bars), 
             users: serializedDate(users),
-
+            tournaments: serializedDate(tournaments),
         },
     };
 }

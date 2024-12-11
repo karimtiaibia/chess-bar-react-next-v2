@@ -1,67 +1,95 @@
 import React from "react"
+import database from "@/_database"
+import serializedDate from "@/lib/serializeDate"
 
 import { Section } from "../components/common/Section"
-import { H1, H2 } from "../components/common/Typefaces"
+import { H1, H2, Table, Thead, Tr, Th, Td, TableContainer, ActionTd } from "../components/common/Typefaces"
+import { Button } from "../components/common/Button"
 
-export default function Admin() {
+export default function Admin({ bars, users, tournaments }) {
+
     return (
         <Section>
             <H1>Administration</H1>
             <Section id="admin-controls">
-                <a href="/admin/bar/add"><button>Ajouter un bar</button></a>
-                <a href="/admin/tournament/add"><button>Ajouter un tournoi</button></a>
-                <a href="/admin/ranking"><button>Gérer les scores</button></a>
+                <a href="/admin/bar"><Button>Ajouter un bar</Button></a>
+                <a href="/admin/tournament"><Button>Ajouter un tournoi</Button></a>
+                <a href="/admin/ranking"><Button>Gérer les scores</Button></a>
             </Section>
 
-            <Section>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Lieu</th>
-                            <th>Date d'inscription</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+            <TableContainer>
+                <Table>
+                    <Thead>
+                        <Tr>
+                            <Th>Lieu</Th>
+                            <Th>Date d'inscription</Th>
+                            <Th>Action</Th>
+                        </Tr>
+                    </Thead>
                     <tbody>
                         <H2>Bars</H2>
-                        {/* {bars.map((bar) => (
-                            <tr>
-                                <td>{ bar.name }{ bar.city }{ bar.zipcode }</td>
-                                <td>{ (new Date(bar.register_date)).toLocaleDateString('fr-FR') }</td>
-                                <td>
-                                    <a href='/admin/bar/{bar.id}/delete'>
-                                        <button>Supprimer</button>
-                                    </a>
-                                    <a href="/admin/bar/{bar.id}/edit"><button>Modifier</button></a>
-                                </td>
-                            </tr>
-                        ))} */}
+                        {bars.map((bar, index) => (
+                            <Tr key={index}>
+                                <Td>{ bar.name } { bar.city } ({ bar.zipcode })</Td>
+                                <Td>{ new Date(bar.date).toLocaleDateString("fr-FR") }</Td>
+                                <Td>
+                                    <ActionTd>
+                                        <Button key={bar.id}>Supprimer</Button>
+                                    </ActionTd>
+                                    <ActionTd>
+                                        <Button key={bar.id}>Modifier</Button>
+                                    </ActionTd>
+                                </Td>
+                            </Tr>
+                        ))}
                     </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Lieu</th>
-                            <th>Date du tournoi</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                </Table>
+                <Table>
+                    <Thead>
+                        <Tr>
+                            <Th>Lieu</Th>
+                            <Th>Date du tournoi</Th>
+                            <Th>Action</Th>
+                        </Tr>
+                    </Thead>
                     <tbody>
-                        <h2 id="tournaments-list">Tournois</h2>
-                        {/* <% for (const tournament of tournaments) { %>
-                            <tr>
-                                <td><%= tournament.name %> <%= ' ('%><%=tournament.city %><%=') ' %></td>
-                                <td><%= (new Date(tournament.date)).toLocaleDateString('fr-FR') %></td>
-                                <td>
-                                    <a href="/admin/tournament/<%= tournament.id %>/delete"><button>Supprimer</button></a>
-                                    <a href="/admin/tournament/<%= tournament.id %>/edit"><button>Modifier</button></a>
-                                </td>
-                            </tr>
-                        <% } %> */}
+                        <H2 id="tournaments-list">Tournois</H2>
+                        {tournaments.map((tournament, index) => ( 
+                            <Tr key={index}>
+                                <Td>{ tournament.name } { tournament.city } ({ tournament.zipcode })</Td>
+                                <Td>{ new Date(tournaments.date).toLocaleDateString("fr-FR") }</Td>
+                                <Td>
+                                <ActionTd>
+                                        <Button key={tournament.id}>Supprimer</Button>
+                                    </ActionTd>
+                                    <ActionTd>
+                                        <Button key={tournament.id}>Modifier</Button>
+                                    </ActionTd>
+                                </Td>
+                            </Tr>
+                        ))}
                     </tbody>
-                </table>
-                
-            </Section>
+                </Table>
+            </TableContainer>
         </Section>
     )
 };
+
+export async function getServerSideProps() {
+    
+    const [bars] = await database.query(`SELECT * FROM bar`)
+    const [users] = await database.query(`SELECT * FROM user`);
+    const [tournaments] = await database.query(`
+        SELECT * FROM tournament 
+        JOIN bar
+        ON bar.id = tournament.id_bar
+    `)
+    
+    return {
+        props: {
+            bars: serializedDate(bars), 
+            users: serializedDate(users),
+            tournaments: serializedDate(tournaments),
+        },
+    };
+}

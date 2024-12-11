@@ -2,10 +2,10 @@ import React from "react";
 
 import { H1 } from "@/pages/components/common/Typefaces";
 import { Section } from "@/pages/components/common/Section";
+import { Button } from "@/pages/components/common/Button";
 
-export default function adminBar () {
+export default function AdminBar () {
     
-
     return (
         <Section>
             <H1>Créer un nouveau bar</H1>
@@ -39,7 +39,7 @@ export default function adminBar () {
                 <label for="imageFile">Logo : </label>
                 <input type="file" id="logo" name="imageFile" placeholder="Logo du bar" accept="image/*" />
 
-                <button type="submit">Valider</button>
+                <Button type="submit">Valider</Button>
             </form>
         </Section>
     )

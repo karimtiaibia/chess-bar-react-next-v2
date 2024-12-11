@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { Section } from "../components/common/Section";
+import { Button } from "../components/common/Button";
 
-export default function Home() {
+export default function Account() {
+    
     return (
-        <>
+        <Section>
             <h2>Profil</h2>
 
             <form action="/account/update" method="POST" >
@@ -19,14 +22,9 @@ export default function Home() {
                 <label for="city">Ville : </label>
                 <input value="" id="city" type="text" name="city" />
 
-                <button>Mettre à jour mon compte</button>
-                if (typeof message !== 'undefined' && message) {
-                    <div class="alert alert-success">
-                        message
-                    </div>
-                }
+                <Button>Mettre à jour mon compte</Button>
                 
             </form>
-        </>
+        </Section>
     );
 }

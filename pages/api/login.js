@@ -63,7 +63,7 @@ export default async function loginHandler(req, res) {
         return res.status(200).json({ 
             success: true, 
             admin: user.admin,
-            redirect: user.admin ? "/admin" : "/" 
+            redirect: user.admin === 1 ? "/admin" : "/" 
         });      
 
     } catch (error) {

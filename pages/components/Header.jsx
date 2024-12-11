@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styled, { css } from "styled-components";
@@ -166,81 +166,105 @@ const Menu = ({ active }) => {
     );
 };
 
-export default function Header() {
+const Header = () => {
     const [userStatus, setUserStatus] = useState("notAuthenticated");
     const [menuActive, setMenuActive] = useState(false);
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        const fetchUserStatus = async () => {
+            try {
+                const response = await fetch("/api/user/status");
+                if (!response) throw new Error("Non authentifié");
+
+                const data = await response.json();
+                const role = data.role === "admin" ? "admin" : "authenticated";
+                setUserStatus(role);
+            } catch (error) {
+                console.error("Erreur lors de la récupération du statut utilisateur :", error);
+                setUserStatus("notAuthenticated");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserStatus();
+    }, []);
+
+    const logoutHandler = async (e) => {
+        e.preventDefault();
+        try {
+            await fetch("/api/logout", { method: "POST" });
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Erreur lors de la déconnexion :", error);
+        }
+    };
+
+    if (loading) return <p>Chargement...</p>;
+    
     return (
         <StyledHeader>
             <Logo href="/">
-                <Image 
-                    src="/img/logo.png" 
-                    fill 
-                    priority={false}
-                    alt="Logo de Chess Bar" />
+                <Image src="/img/logo.png" fill priority={false} alt="Logo de Chess Bar" />
             </Logo>
             <Nav>
                 <NavList id="links">
                     <Li>
-                        <Link id="tournaments" href="/tournaments">
-                            Tournois à venir
-                        </Link>
+                        <Link id="tournaments" href="/tournaments">Tournois à venir</Link>
                     </Li>
                     <Li>
-                        <Link id="rules" href="/rules">
-                            Règlement
-                        </Link>
+                        <Link id="rules" href="/rules">Règlement</Link>
                     </Li>
 
-                    {/* display when user is {authenticated} */}
                     {userStatus === "authenticated" && (
                         <>
-                            <Li $userStatus={userStatus}>
-                                <Link id="account" href="/account">
-                                    Profil
-                                </Link>
+                            <Li>
+                                <Link id="account" href="/account">Profil</Link>
                             </Li>
-                            <Li $userStatus={userStatus}>
-                                <Link id="logout" href="/logout">
-                                    Déconnexion
-                                </Link>
+                            <Li>
+                                <Link id="logout" href="/logout" onClick={logoutHandler}>Déconnexion</Link>
                             </Li>
                         </>
                     )}
 
-                    {/* display when user is {notAuthenticated} */}
                     {userStatus === "notAuthenticated" && (
                         <>
-                            <Li $userStatus={userStatus}>
-                                <Link id="login" href="/login">
-                                    Connexion
-                                </Link>
+                            <Li>
+                                <Link id="login" href="/login">Connexion</Link>
                             </Li>
-                            <Li $userStatus={userStatus}>
-                                <Link id="register" href="/register">
-                                    S&apos;inscrire
-                                </Link>
+                            <Li>
+                                <Link id="register" href="/register">S'inscrire</Link>
                             </Li>
                         </>
                     )}
 
-                    {/* display when user is {admin} */}
-                    {userStatus === "admin" && (
-                        <>
-                            <Li $userStatus={userStatus}>
-                                <Link id="admin" href="/admin">
-                                    Administration
-                                </Link>
-                            </Li>
-                        </>
+                    {userStatus === "admin" || 1 && (
+                        <Li>
+                            <Link id="admin" href="/admin">Administration</Link>
+                        </Li>
                     )}
                 </NavList>
-                <Burger
-                    onClick={() => setMenuActive(!menuActive)}
-                    active={menuActive}
-                />
+                <Burger onClick={() => setMenuActive(!menuActive)} active={menuActive} />
             </Nav>
             <Menu active={menuActive} />
         </StyledHeader>
-    );  
+    );
+};
+
+export default Header;
+
+export async function getServerSideProps() {
+    
+    const [bars] = await database.query(`SELECT * FROM bar`)
+    const [users] = await database.query(`SELECT * FROM user`);
+    const [tournaments] = await database.query(`SELECT * FROM tournament`)
+    
+    return {
+        props: {
+            bars: serializedDate(bars), 
+            users: serializedDate(users),
+            tournaments: serializedDate(tournaments),
+        },
+    };
 }
