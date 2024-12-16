@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import * as _var from "@/styles/variables";
 
 import { Section } from "./common/Section";
+import { H1, H2 } from "./common/Typefaces";
 
 export const Search = styled.div`
     display: flex;
@@ -39,6 +41,7 @@ export const Card = styled.a`
     $hoveredCard && !$isHovered ? 0.75 : 1};
     transition: 150ms ease-in-out;
     transition-property: opacity, transform;
+    margin-top: ${_var.space_S};
 
     &:hover {
         transform: scale(1.01);
@@ -73,43 +76,69 @@ export const CardInfos = styled.div`
 
 export default function Searchbar({ bars }) {
     const [hoveredCard, setHoveredCard] = useState(null);
-        
+    const [searchQuery, setSearchQuery] = useState("");
+    const resultsRef = useRef([]);
+
+    const handleInputChange = (event) => {
+        const query = event.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        resultsRef.current.forEach((result) => {
+            const content = result.textContent.toLowerCase();
+            if (content.includes(query) && query !== "") {
+                result.style.display = "flex";
+            } else {
+                result.style.display = "none";
+            }
+        });
+    };
+    console.log(bars)
     return (
         <>
             <Section>
                 <Search>
                     <InputTitle>Rechercher lieu, bar, ville...</InputTitle>
-                    <Input id="searchbar" />
+                    <Input 
+                        key=""
+                        id="searchbar"
+                        type="text"
+                        placeholder="Rechercher..."
+                        value={searchQuery}
+                        onChange={handleInputChange} 
+                    />
                 </Search>
-            </Section>
-            <Section style={{ background: `${_var.grayscale[100]}` }}>
+            
+            {/* <Section style={{ background: `${_var.grayscale[100]}` }}> */}
                 <Cards>
-                    {bars.map((bar) => (
-                        <Card
-                            key={bar.id}
-                            onMouseEnter={() => setHoveredCard(bar.id)}
-                            onMouseLeave={() => setHoveredCard(null)}
-                            $isHovered={hoveredCard === bar.id}
-                            $hoveredCard={hoveredCard}
-                        >
-                            <Placeholder>
-                                <Image
-                                    src={`/img/${bar.logo}`}
-                                    fill
-                                    size="auto"
-                                    priority={false}
-                                    alt={`Logo du bar ${bar.name}`}
-                                />
-                            </Placeholder>
-                            <CardInfos>
-                                <h2>{bar.name}</h2>
-                                <p>
-                                    {bar.adress}, {bar.zipcode}, {bar.city}
-                                </p>
-                            </CardInfos>
-                        </Card>
+                    {bars.map((bar, index) => (
+                        <Link href={`/bars/${bar.id}`  }>
+                            <Card
+                                key={bar.id}
+                                onMouseEnter={() => setHoveredCard(bar.id)}
+                                onMouseLeave={() => setHoveredCard(null)}
+                                $isHovered={hoveredCard === bar.id}
+                                $hoveredCard={hoveredCard}
+                                ref={(el) => (resultsRef.current[index] = el)}
+                                style={{ display: "none" }}
+                            >
+                                <Placeholder>
+                                    <Image
+                                        src={`/img/${bar.logo}`}
+                                        fill
+                                        size="auto"
+                                        priority={false}
+                                        alt={`Logo du bar ${bar.name}`}
+                                    />
+                                </Placeholder>
+                                <CardInfos>
+                                    <H1>{bar.name}</H1>
+                                    <H2>{bar.adress}, {bar.zipcode}, {bar.city}</H2>
+                                </CardInfos>
+                            </Card>
+                        </Link>
                     ))}
                 </Cards>
+            {/* </Section> */}
             </Section>
         </>
     );

@@ -7,22 +7,22 @@ import serializedDate from "@/lib/serializeDate";
 
 import Searchbar, { Placeholder } from "./components/Searchbar";
 import { Section } from "./components/common/Section";
-import { H1 } from "./components/common/Typefaces";
+import { H1, H2 } from "./components/common/Typefaces";
 import { Ul } from "./components/common/Ul";
 import { Cards, Card } from "./components/Searchbar";
 
-export default function Home({ bars, users, tournaments }) {
+export default function Home({ bars }) {
     
     return (
         <>
-            <Searchbar bars={bars} users={users} tournaments={tournaments} />
+            <Searchbar bars={bars} />
             <Section>
                 <H1>ChessBar comment ça marche ?</H1>
                 <Ul>
                     <li>
                         1. Je m’inscris gratuitement en remplissant le formulaire
                         disponible&nbsp;
-                        <a href="register">ici</a>.
+                        <a href="/register">ici</a>.
                     </li>
                     <li>
                         2. Je suis intégré au WhatsApp de ma ville pour m’inscrire aux
@@ -45,7 +45,7 @@ export default function Home({ bars, users, tournaments }) {
                 </Ul>
             </Section>
             <Section>
-                <h2>Nos Partenaires</h2>
+                <H2>Nos Partenaires</H2>
                 <Cards>
                     <Card>
                         <a href="https://www.krcimmo.fr/">
@@ -85,14 +85,10 @@ export default function Home({ bars, users, tournaments }) {
 export async function getServerSideProps() {
     
     const [bars] = await database.query(`SELECT * FROM bar`)
-    const [users] = await database.query(`SELECT * FROM user`);
-    const [tournaments] = await database.query(`SELECT * FROM tournament`)
     
     return {
         props: {
             bars: serializedDate(bars), 
-            users: serializedDate(users),
-            tournaments: serializedDate(tournaments),
         },
     };
 }

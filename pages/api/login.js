@@ -56,7 +56,7 @@ export default async function loginHandler(req, res) {
             maxAge: 60 * 60 * 24,
             path: "/",
         });
-        console.log(user.admin)
+        
         res.setHeader("Set-Cookie", sessionCookie);
         
         // Renvoyer une réponse JSON avec admin

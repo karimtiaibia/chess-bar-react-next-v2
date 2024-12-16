@@ -2,14 +2,14 @@ import React from "react"
 import database from "@/_database"
 import serializedDate from "@/lib/serializeDate"
 
-import { Section } from "../components/common/Section"
+import { Button } from "@/pages/components/common/Button";
+import { Section } from "@/pages/components/common/Section"
 import { 
-    H1, H2, Button,
-    Table, Thead, Tr, Th, Td, TableContainer, ActionTd, 
-    Control
+    H1, H2,
+    Table, Thead, Tbody, Tr, Th, Td, TableContainer, Control
 } from "../components/common/Typefaces"
 
-export default function Admin({ bars, users, tournaments }) {
+export default function Admin({ bars, tournaments }) {
 
     return (
         <Section>
@@ -29,23 +29,19 @@ export default function Admin({ bars, users, tournaments }) {
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
-                    <tbody>
+                    <Tbody>
                         <H2>Bars</H2>
-                        {bars.map((bar, index) => (
-                            <Tr key={index}>
+                        {bars.map((bar) => (
+                            <Tr>
                                 <Td>{ bar.name } { bar.city } ({ bar.zipcode })</Td>
                                 <Td>{ new Date(bar.date).toLocaleDateString("fr-FR") }</Td>
                                 <Td>
-                                    <ActionTd>
-                                        <Button key={bar.id}>Supprimer</Button>
-                                    </ActionTd>
-                                    <ActionTd>
-                                        <Button key={bar.id}>Modifier</Button>
-                                    </ActionTd>
+                                    <Button key={bar.id}>Modifier</Button>
+                                    <Button key={bar.id}>Supprimer</Button>
                                 </Td>
                             </Tr>
                         ))}
-                    </tbody>
+                    </Tbody>
                 </Table>
                 <Table>
                     <Thead>
@@ -55,23 +51,19 @@ export default function Admin({ bars, users, tournaments }) {
                             <Th>Action</Th>
                         </Tr>
                     </Thead>
-                    <tbody>
+                    <Tbody>
                         <H2 id="tournaments-list">Tournois</H2>
                         {tournaments.map((tournament, index) => ( 
-                            <Tr key={index}>
+                            <Tr>
                                 <Td>{ tournament.name } { tournament.city } ({ tournament.zipcode })</Td>
                                 <Td>{ new Date(tournaments.date).toLocaleDateString("fr-FR") }</Td>
                                 <Td>
-                                <ActionTd>
-                                        <Button key={tournament.id}>Supprimer</Button>
-                                    </ActionTd>
-                                    <ActionTd>
-                                        <Button key={tournament.id}>Modifier</Button>
-                                    </ActionTd>
+                                    <Button key={tournament.id}>Modifier</Button>
+                                    <Button key={tournament.id}>Supprimer</Button>
                                 </Td>
                             </Tr>
                         ))}
-                    </tbody>
+                    </Tbody>
                 </Table>
             </TableContainer>
         </Section>
@@ -80,18 +72,17 @@ export default function Admin({ bars, users, tournaments }) {
 
 export async function getServerSideProps() {
     
-    const [bars] = await database.query(`SELECT * FROM bar`)
-    const [users] = await database.query(`SELECT * FROM user`);
+    const [bars] = await database.query(`
+        SELECT * FROM bar
+    `)
     const [tournaments] = await database.query(`
-        SELECT * FROM tournament 
-        JOIN bar
-        ON bar.id = tournament.id_bar
+        SELECT * FROM bar
+        JOIN tournament ON bar.id = tournament.id_bar
     `)
     
     return {
         props: {
             bars: serializedDate(bars), 
-            users: serializedDate(users),
             tournaments: serializedDate(tournaments),
         },
     };

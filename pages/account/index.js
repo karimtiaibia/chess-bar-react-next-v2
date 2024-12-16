@@ -1,30 +1,32 @@
 import React, { useState } from "react";
+import serializedDate from "@/lib/serializeDate";
+
 import { Section } from "../components/common/Section";
 import { Button } from "../components/common/Button";
+import { H1, Form, Input, Label } from "../components/common/Typefaces";
 
-export default function Account() {
+export default function Account(userAccount) {
     
     return (
         <Section>
-            <h2>Profil</h2>
+            <H1>Modifier le profil</H1>
+            <Form action="/account/update" method="POST" >
 
-            <form action="/account/update" method="POST" >
+                <Label for="pseudo">Pseudo : </Label>
+                <Input value="" id="pseudo" type="pseudo" name="pseudo" disabled />
                 
-                <label for="pseudo">Pseudo : </label>
-                <input value="" id="pseudo" type="pseudo" name="pseudo" disabled />
+                <Label for="password">Mot de passe : </Label>
+                <Input id="password" type="password" name="password" placeholder ="***" disabled />
                 
-                <label for="password">Mot de passe : </label>
-                <input id="password" type="password" name="password" placeholder ="***" disabled />
-                
-                <label for="email">Email : </label>
-                <input value="" id="email" type="email" name="email" />
+                <Label for="email">Email : </Label>
+                <Input value="" id="email" type="email" name="email" />
                     
-                <label for="city">Ville : </label>
-                <input value="" id="city" type="text" name="city" />
+                <Label for="city">Ville : </Label>
+                <Input value="" id="city" type="text" name="city" />
 
                 <Button>Mettre à jour mon compte</Button>
                 
-            </form>
+            </Form>
         </Section>
     );
 }

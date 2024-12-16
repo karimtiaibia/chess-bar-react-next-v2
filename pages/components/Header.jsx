@@ -223,7 +223,7 @@ const Header = () => {
                                 <Link id="account" href="/account">Profil</Link>
                             </Li>
                             <Li>
-                                <Link id="logout" href="/logout" onClick={logoutHandler}>Déconnexion</Link>
+                                <a id="logout" href="/logout" onClick={logoutHandler}>Déconnexion</a>
                             </Li>
                         </>
                     )}
@@ -239,7 +239,7 @@ const Header = () => {
                         </>
                     )}
 
-                    {userStatus === "admin" || 1 && (
+                    {userStatus === "admin" || true && (
                         <Li>
                             <Link id="admin" href="/admin">Administration</Link>
                         </Li>
@@ -253,18 +253,3 @@ const Header = () => {
 };
 
 export default Header;
-
-export async function getServerSideProps() {
-    
-    const [bars] = await database.query(`SELECT * FROM bar`)
-    const [users] = await database.query(`SELECT * FROM user`);
-    const [tournaments] = await database.query(`SELECT * FROM tournament`)
-    
-    return {
-        props: {
-            bars: serializedDate(bars), 
-            users: serializedDate(users),
-            tournaments: serializedDate(tournaments),
-        },
-    };
-}

@@ -9,6 +9,7 @@ export const H2 = styled.h1`
     margin-top: ${_var.space_S};
 `;
 
+// TABLE STYLE
 export const TableContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -72,46 +73,6 @@ export const Td = styled.td`
     }
 `;
 
-export const ActionTd = styled.div`
-    display: flex;
-    gap: ${_var.space_S};
-`;
-
-// export const Button = styled.button`
-//     background-color: #fbeee0;
-//     border: 2px solid #422800;
-//     border-radius: 30px;
-//     box-shadow: #422800 4px 4px 0 0;
-//     color: #422800;
-//     cursor: pointer;
-//     display: inline-block;
-//     font-weight: 600;
-//     font-size: 18px;
-//     padding: 0 18px;
-//     line-height: 50px;
-//     text-align: center;
-//     text-decoration: none;
-//     user-select: none;
-//     -webkit-user-select: none;
-//     touch-action: manipulation;
-
-//     &:hover {
-//         background-color: #fff;
-//     }
-
-//     &:active {
-//         box-shadow: #422800 2px 2px 0 0;
-//         transform: translate(2px, 2px);
-//     }
-
-//     @media (min-width: 768px) {
-//         .register-button {
-//             min-width: 120px;
-//             padding: 0 25px;
-//         }
-//     }
-// `;
-
 export const Control = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
@@ -122,11 +83,40 @@ export const Control = styled.div`
     max-width: 600px;
 `;
 
+export const Tbody = styled.tbody`
+    & > tr {
+        background-color: ${_var.grayscale[50]};
+        transition: background-color 0.2s ease;
+
+        &:nth-child(even) {
+            background-color: ${_var.grayscale[100]};
+        }
+
+        &:hover {
+            background-color: ${_var.primaryLight};
+        }
+    }
+
+    & td {
+        padding: ${_var.space_M};
+        color: ${_var.grayscale[900]};
+        text-align: left;
+        border-bottom: 1px solid ${_var.grayscale[200]};
+        vertical-align: middle;
+
+        &:last-child {
+            text-align: center;
+        }
+    }
+`;
+
 // FORM STYLE 
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: ${_var.space_M};
+    height: 500px;
+    width: 500px;
 `;
 
 export const Label = styled.label`
@@ -136,7 +126,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-    padding: ${_var.space_S} ${_var.space_M};
+    padding: ${_var.space_S};
     border: 1px solid ${_var.grayscale[300]};
     border-radius: ${_var.space_XS};
     background: ${_var.grayscale[100]};
@@ -157,26 +147,4 @@ export const Input = styled.input`
 
 export const FileInput = styled(Input)`
     padding: ${_var.space_S};
-`;
-
-export const SubmitButton = styled.button`
-    width: 100%;
-    padding: ${_var.space_S};
-    font-size: 1.2rem;
-    font-weight: bold;
-    background: ${_var.primary};
-    color: ${_var.grayscale[50]};
-    border: none;
-    border-radius: ${_var.space_XS};
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-
-    &:hover {
-        background: ${_var.primaryDark};
-    }
-
-    &:disabled {
-        background: ${_var.grayscale[300]};
-        cursor: not-allowed;
-    }
 `;
