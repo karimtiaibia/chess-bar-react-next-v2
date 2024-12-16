@@ -92,7 +92,7 @@ export default function Searchbar({ bars }) {
             }
         });
     };
-    console.log(bars)
+    
     return (
         <>
             <Section>
@@ -142,4 +142,18 @@ export default function Searchbar({ bars }) {
             </Section>
         </>
     );
+}
+
+export async function getServerSideProps() {
+    const id = await fetch(`/bars/${params.id}`);
+    const bars = await id.json();
+
+    console.log(id)
+    if (!bars) {
+        return {notFound: true};
+    }
+
+    return {
+        props: { bars }, // Will be passed to the page component as props
+    };
 }

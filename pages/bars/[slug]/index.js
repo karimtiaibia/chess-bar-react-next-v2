@@ -1,16 +1,10 @@
 import Image from "next/image";
-import database from "../../_database";
-import serializedDate from "@/lib/serializeDate";
-import styled from "styled-components";
 
-
-import { Section } from "./common/Section";
-import { H1, Input, Form } from "./common/Typefaces";
+import { Section } from "@/pages/components/common/Section";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
-export default function Bars({ bars, tournaments, ranking, userSession }) {
+export default function Bar({ bars }) {
     
-
     return (
 
         <Section>
@@ -143,22 +137,4 @@ export default function Bars({ bars, tournaments, ranking, userSession }) {
             ))}
         </Section>
     );
-}
-
-export async function getServerSideProps() {
-    
-    const [bars] = await database.query(`SELECT * FROM bar`)
-    const [users] = await database.query(`SELECT * FROM user`);
-    const [tournaments] = await database.query(`
-        SELECT * FROM tournament
-        JOIN bar ON tournament.id_bar = bar.id
-    `)
-    console.log(bars)
-    return {
-        props: {
-            bars: serializedDate(bars), 
-            users: serializedDate(users),
-            tournaments: serializedDate(tournaments),
-        },
-    };
 }
