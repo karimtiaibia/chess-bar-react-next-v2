@@ -111,7 +111,7 @@ export default function Searchbar({ bars }) {
             {/* <Section style={{ background: `${_var.grayscale[100]}` }}> */}
                 <Cards>
                     {bars.map((bar, index) => (
-                        <Link href={`/bars/${bar.id}`  }>
+                        <Link href={`/bars/${bar.id}`}>
                             <Card
                                 key={bar.id}
                                 onMouseEnter={() => setHoveredCard(bar.id)}
@@ -142,18 +142,4 @@ export default function Searchbar({ bars }) {
             </Section>
         </>
     );
-}
-
-export async function getServerSideProps() {
-    const id = await fetch(`/bars/${params.id}`);
-    const bars = await id.json();
-
-    console.log(id)
-    if (!bars) {
-        return {notFound: true};
-    }
-
-    return {
-        props: { bars }, // Will be passed to the page component as props
-    };
 }

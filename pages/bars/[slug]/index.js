@@ -1,6 +1,10 @@
 import Image from "next/image";
+import database from "@/_database";
+import serializedDate from "@/lib/serializeDate";
 
 import { Section } from "@/pages/components/common/Section";
+import { H1 } from "@/pages/components/common/Typefaces";
+
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 export default function Bar({ bars }) {
@@ -10,12 +14,14 @@ export default function Bar({ bars }) {
         <Section>
             {bars.map((bar) => (
                 <Section key={bar.id} className="bar-details">
-                    <aside className="bar-info">
-                        <Image 
-                            className="bar-logo" 
-                            src={`../img/${bar.logo}`} 
-                            alt="Logo du bar" 
-                        />
+                    <Section className="bar-info">
+                        {/* <Image
+                            src={`/img/${bar.logo}`}
+                            fill
+                            size="auto"
+                            priority={false}
+                            alt={`Logo du bar ${bar.name}`}
+                        /> */}
                         <div className="bar-container">
                             <div className="info-container">
                                 <H1>
@@ -63,14 +69,14 @@ export default function Bar({ bars }) {
                                 )}
                             </div>
                         </div>
-                    </aside>
+                    </Section>
                     <p>
                         Il reste{' '}
                         {Math.ceil((new Date(bar.end_of_season).getTime() - new Date().getTime()) / 86400000)} jours
                         avant la fin de la saison.
                     </p>
 
-                    <div className="next-tournaments">
+                    {/* <div className="next-tournaments">
                         <H1>Prochains Tournois</H1>
                         {tournaments.map((tournament) => (
                             <Section key={tournament.id} className="tournaments">
@@ -132,7 +138,7 @@ export default function Bar({ bars }) {
                                 ))}
                             </tbody>
                         </table>
-                    </Section>
+                    </Section> */}
                 </Section>
             ))}
         </Section>
