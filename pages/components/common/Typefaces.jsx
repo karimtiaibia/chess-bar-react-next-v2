@@ -79,7 +79,7 @@ export const Control = styled.div`
     gap: ${_var.space_M};
     background: ${_var.grayscale[50]};
     border-radius: ${_var.space_S};
-    box-shadow: ${_var.cardShadowLarge};
+    //box-shadow: ${_var.cardShadowLarge};
     max-width: 600px;
 `;
 

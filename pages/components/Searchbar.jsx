@@ -30,7 +30,7 @@ export const Cards = styled.div`
     gap: ${_var.space_S};
 `;
 
-export const Card = styled.a`
+export const Card = styled.div`
     display: flex;
     flex-direction: column;
     padding: ${_var.space_M};
@@ -108,17 +108,16 @@ export default function Searchbar({ bars }) {
                     />
                 </Search>
             
-            {/* <Section style={{ background: `${_var.grayscale[100]}` }}> */}
+            {/* <Section> */}
                 <Cards>
-                    {bars.map((bar, index) => (
-                        <Link href={`/bars/${bar.id}`}>
+                    {bars.map((bar) => (
+                        <Link key={bar.id} href={`/bars/${bar.id}`} passHref>
                             <Card
-                                key={bar.id}
                                 onMouseEnter={() => setHoveredCard(bar.id)}
                                 onMouseLeave={() => setHoveredCard(null)}
                                 $isHovered={hoveredCard === bar.id}
                                 $hoveredCard={hoveredCard}
-                                ref={(el) => (resultsRef.current[index] = el)}
+                                ref={(el) => (resultsRef.current[bar.id] = el)}
                                 style={{ display: "none" }}
                             >
                                 <Placeholder>
@@ -132,7 +131,7 @@ export default function Searchbar({ bars }) {
                                 </Placeholder>
                                 <CardInfos>
                                     <H1>{bar.name}</H1>
-                                    <H2>{bar.adress}, {bar.zipcode}, {bar.city}</H2>
+                                    <H2>{bar.address}, {bar.zipcode}, {bar.city}</H2>
                                 </CardInfos>
                             </Card>
                         </Link>

@@ -61,19 +61,17 @@ export default function Home({ bars }) {
                         </a>
                     </Card>
                     <Card>
-                        <>
-                            <a href="https://www.les-ptitsmatelots.fr/">
-                                <Placeholder>
-                                    <Image
-                                        src="/img/lpm-logo.png"
-                                        fill
-                                        size="auto"
-                                        priority={false}
-                                        alt="Logo de l'entreprise Les Ptits Matelots" 
-                                    />
-                                </Placeholder>
-                            </a>
-                        </>
+                        <a href="https://www.les-ptitsmatelots.fr/">
+                            <Placeholder>
+                                <Image
+                                    src="/img/lpm-logo.png"
+                                    fill
+                                    size="auto"
+                                    priority={false}
+                                    alt="Logo de l'entreprise Les Ptits Matelots" 
+                                />
+                            </Placeholder>
+                        </a>
                     </Card>
                 </Cards>
             </Section>
