@@ -131,7 +131,7 @@ export default function Searchbar({ bars }) {
                                 </Placeholder>
                                 <CardInfos>
                                     <H1>{bar.name}</H1>
-                                    <H2>{bar.address}, {bar.zipcode}, {bar.city}</H2>
+                                    <H2>{bar.adress}, {bar.zipcode}, {bar.city}</H2>
                                 </CardInfos>
                             </Card>
                         </Link>

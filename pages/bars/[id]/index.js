@@ -7,8 +7,9 @@ import { Section } from "@/pages/components/common/Section";
 import { H1 } from "@/pages/components/common/Typefaces";
 
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { Button } from "@/pages/components/common/Button";
 
-export default function Bar({ bar, tournaments }) {
+export default function Bar({ bar, tournaments, ranking }) {
     
     return (
         <Section>
@@ -16,16 +17,16 @@ export default function Bar({ bar, tournaments }) {
                 <Section className="bar-info">
                     <Image
                         src={`/img/${bar.logo}`}
-                        fill
-                        size="auto"
+                        width={300}
+                        height={300}
                         priority={false}
                         alt={`Logo du bar ${bar.name}`}
                     />
                     <div className="bar-container">
                         <div className="info-container">
                             <H1>
-                                <i className="fas fa-file-alt"></i> Inscrit depuis le{' '}
-                                {new Date(bar.register_date).toLocaleDateString('fr-FR')}
+                                <i className="fas fa-file-alt"></i> 
+                                Inscrit depuis le{` ${new Date(bar.register_date).toLocaleDateString('fr-FR')}`}
                             </H1>
                             <div className="adress">
                                 <H1>
@@ -74,21 +75,37 @@ export default function Bar({ bar, tournaments }) {
                     avant la fin de la saison.
                 </p>
 
-                <div className="next-tournaments">
+                <Section className="next-tournaments">
                     <H1>Prochains Tournois</H1>
-                    {/* {tournaments.map((tournament) => (
-                        <Section key={tournament.id} className="tournaments">
+                    {tournaments.map((tournament) => (
+                        console.log(tournament),
+                        <Section className="tournaments">
                             <div>
-                                <img src={`../img/${tournament.logo}`} alt="Logo du tournoi" />
+                                <Image 
+                                    src={`/img/${ tournament.logo }`}
+                                />
                             </div>
-                            <H1>
-                                {tournament.name} - {tournament.city}
-                            </H1>
-                            <H1>{new Date(tournament.date).toLocaleDateString('fr-FR')}</H1>
-                            <H1>{tournament.description}</H1>
+                            <h2>{ tournament.name } { tournament.city }</h2>
+                            <h3>{ new Date(tournament.date).toLocaleDateString('fr-FR') }</h3>
+                            <h4>{ tournament.description }</h4>
+                            {/* {isConnected ? (
+                                <div>
+                                    <h4>{ tournament.nb_places_disponibles } { " places disponibles "}</h4>
+                                    <form   action={`/bars/${ bar.id }/${ tournament.id }/${ locals.session.user.id }/registered`} 
+                                            onsubmit="return confirm(`Êtes-vous sûr de vouloir vous inscrire à ce tournoi ?`)"
+                                            method="POST">
+                                        <Button type="submit" className="tournament-registered buttoncheck">S'inscrire</Button>
+                                    </form>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h4>{ tournament.nb_places_disponibles } { " places disponibles " }</h4>
+                                    <h4>Vous devez vous connecter pour vous inscrire au tournoi.</h4>
+                                </div>
+                            )} */}
                         </Section>
-                    ))} */}
-                </div>
+                    ))}
+                </Section>
 
                 <Section className="rankings">
                     <table>
@@ -100,13 +117,13 @@ export default function Bar({ bar, tournaments }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {ranking.map((rank, i) => (
+                            {ranking.map((rank, i) => (
                                 <tr key={rank.id}>
                                     <td>{i + 1}</td>
                                     <td>{rank.pseudo}</td>
                                     <td>{rank.score}</td>
                                 </tr>
-                            ))} */}
+                            ))}
                         </tbody>
                     </table>
                 </Section>
@@ -116,24 +133,47 @@ export default function Bar({ bar, tournaments }) {
 }
 
 export async function getServerSideProps(context) {
-    const id = context.params.id;
-    console.log("ID reçu :", id);
+    const barId = context.params.id;
+    //console.log("ID du bar :", barId);
 
-    const [bar] = await database.query(`
+    const [bars] = await database.query(`
         SELECT * FROM bar
         WHERE id = ?
-    `, [id]);
-    console.log("Résultat de la requête :", bar);
-
-    if (!bar.length) {
+    `, [barId]);
+    //console.log(`Bar avec l'ID ${barId} : `, bars);
+    // Si aucun résultat n'est trouvé
+    if (!bars || bars.length === 0) {
         return {
             notFound: true,
         };
     }
 
+    const [tournamentsList] = await database.query(`
+        SELECT *, bar.name, tournament.id FROM tournament
+        JOIN bar ON bar.id = tournament.id_bar
+        WHERE id_bar = ?
+        LIMIT 2
+    `, [barId]);
+    
+    const [rankings] = await database.query(`
+        SELECT user.name AS name, SUM(ranking.score) AS score, ranking.id_user
+        FROM ranking
+        JOIN user ON user.id = ranking.id_user
+        JOIN tournament ON tournament.id = ranking.id_tournament
+        JOIN bar ON bar.id = tournament.id_bar
+        WHERE bar.id = ?
+        GROUP BY user.name, ranking.id_user
+        ORDER BY score DESC
+        LIMIT 14;
+    `, [barId])
+    // Sérialise et retourne directement l'objet bar
+    const [bar] = serializedDate(bars);
+    const [tournaments] = serializedDate(tournamentsList);
+    const [ranking] = serializedDate(rankings)
+    console.log(`Tournois dans le bar avec l'ID ${barId} : `, tournamentsList);
     return {
         props: {
-            bar: serializedDate(bar),
+            bar, tournaments, ranking
         },
     };
 }
