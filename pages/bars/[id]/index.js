@@ -133,7 +133,7 @@ export async function getServerSideProps(context) {
 
     const [bar] = await database.query(`
         SELECT * FROM bar
-        WHERE id = ?
+        WHERE id = ?;
     `, [barId]);
     //console.log(`Bar avec l'ID ${barId} : `, bar);
     // Si aucun résultat n'est trouvé
@@ -147,7 +147,7 @@ export async function getServerSideProps(context) {
         SELECT *, bar.name, tournament.id FROM tournament
         JOIN bar ON bar.id = tournament.id_bar
         WHERE id_bar = ?
-        LIMIT 2
+        LIMIT 2;
     `, [barId]);
     
     const [ranking] = await database.query(`
@@ -161,7 +161,7 @@ export async function getServerSideProps(context) {
         ORDER BY score DESC
         LIMIT 14;
     `, [barId])
-    JSON.stringify(bar, barTournaments, ranking)
+    // JSON.stringify(bar, barTournaments, ranking)
     console.log("Bar : ", bar)
     console.log("Tournois du bar : ", barTournaments)
     console.log("Classement : ", ranking)
