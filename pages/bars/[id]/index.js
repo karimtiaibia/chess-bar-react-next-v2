@@ -1,15 +1,12 @@
 import Image from "next/image";
-
 import database from "@/_database";
-import serializedDate from "@/lib/serializeDate";
 
 import { Section } from "@/pages/components/common/Section";
 import { H1 } from "@/pages/components/common/Typefaces";
 
 import { FaFacebook, FaInstagram } from "react-icons/fa";
-import { Button } from "@/pages/components/common/Button";
 
-export default function Bar({ bar, tournaments, ranking }) {
+export default function Bar({ bar, barTournaments, ranking }) {
     
     return (
         <Section>
@@ -77,8 +74,7 @@ export default function Bar({ bar, tournaments, ranking }) {
 
                 <Section className="next-tournaments">
                     <H1>Prochains Tournois</H1>
-                    {tournaments.map((tournament) => (
-                        console.log(tournament),
+                    {barTournaments.map((tournament) => (
                         <Section className="tournaments">
                             <div>
                                 <Image 
@@ -91,7 +87,7 @@ export default function Bar({ bar, tournaments, ranking }) {
                             {/* {isConnected ? (
                                 <div>
                                     <h4>{ tournament.nb_places_disponibles } { " places disponibles "}</h4>
-                                    <form   action={`/bars/${ bar.id }/${ tournament.id }/${ locals.session.user.id }/registered`} 
+                                    <form   action={`/bar/${ bar.id }/${ tournament.id }/${ locals.session.user.id }/registered`} 
                                             onsubmit="return confirm(`Êtes-vous sûr de vouloir vous inscrire à ce tournoi ?`)"
                                             method="POST">
                                         <Button type="submit" className="tournament-registered buttoncheck">S'inscrire</Button>
@@ -132,30 +128,30 @@ export default function Bar({ bar, tournaments, ranking }) {
     );
 }
 
-export async function getServerSideProps(context) {
+export async function barDetails(context) {
     const barId = context.params.id;
     //console.log("ID du bar :", barId);
 
-    const [bars] = await database.query(`
+    const [bar] = await database.query(`
         SELECT * FROM bar
         WHERE id = ?
     `, [barId]);
-    //console.log(`Bar avec l'ID ${barId} : `, bars);
+    //console.log(`Bar avec l'ID ${barId} : `, bar);
     // Si aucun résultat n'est trouvé
-    if (!bars || bars.length === 0) {
+    if (!bar || bar.length === 0) {
         return {
             notFound: true,
         };
     }
 
-    const [tournamentsList] = await database.query(`
+    const [barTournaments] = await database.query(`
         SELECT *, bar.name, tournament.id FROM tournament
         JOIN bar ON bar.id = tournament.id_bar
         WHERE id_bar = ?
         LIMIT 2
     `, [barId]);
     
-    const [rankings] = await database.query(`
+    const [ranking] = await database.query(`
         SELECT user.name AS name, SUM(ranking.score) AS score, ranking.id_user
         FROM ranking
         JOIN user ON user.id = ranking.id_user
@@ -166,14 +162,14 @@ export async function getServerSideProps(context) {
         ORDER BY score DESC
         LIMIT 14;
     `, [barId])
-    // Sérialise et retourne directement l'objet bar
-    const [bar] = serializedDate(bars);
-    const [tournaments] = serializedDate(tournamentsList);
-    const [ranking] = serializedDate(rankings)
-    console.log(`Tournois dans le bar avec l'ID ${barId} : `, tournamentsList);
+    JSON.stringify(bar, barTournaments, ranking)
+    console.log(bar.logo)
+    console.log("Bar : ", bar)
+    console.log("Tournois du bar : ", barTournaments)
+    console.log("Classement : ", ranking)
     return {
         props: {
-            bar, tournaments, ranking
+            bar, barTournaments, ranking
         },
     };
 }
