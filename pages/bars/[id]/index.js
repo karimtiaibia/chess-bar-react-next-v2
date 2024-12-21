@@ -6,7 +6,7 @@ import { H1 } from "@/pages/components/common/Typefaces";
 
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
-export default function Bar({ bars, barTournaments, ranking }) {
+export default function Bar({ bar, barTournaments, ranking }) {
     
     return (
         <Section>
