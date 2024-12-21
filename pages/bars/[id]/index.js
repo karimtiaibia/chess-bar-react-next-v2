@@ -6,72 +6,73 @@ import { H1 } from "@/pages/components/common/Typefaces";
 
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 
-export default function Bar({ bar, barTournaments, ranking }) {
+export default function Bar({ bars, barTournaments, ranking }) {
     
     return (
         <Section>
             <Section className="bar-details">
-                <Section className="bar-info">
-                    <Image
-                        src={`/img/${bar.logo}`}
-                        width={300}
-                        height={300}
-                        priority={false}
-                        alt={`Logo du bar ${bar.name}`}
-                    />
-                    <div className="bar-container">
-                        <div className="info-container">
-                            <H1>
-                                <i className="fas fa-file-alt"></i> 
-                                Inscrit depuis le{` ${new Date(bar.register_date).toLocaleDateString('fr-FR')}`}
-                            </H1>
-                            <div className="adress">
+                {bars.map((bar) => (
+                    <Section className="bar-info">
+                        <Image
+                            src={`/img/${bar.logo}`}
+                            fill
+                            size="auto"
+                            priority={false}
+                            alt={`Logo du bar ${bar.name}`}
+                        />
+                        <div className="bar-container">
+                            <div className="info-container">
                                 <H1>
-                                    <i className="fas fa-map"></i> {bar.address}
+                                    <i className="fas fa-file-alt"></i> 
+                                    Inscrit depuis le{` ${new Date(bar.register_date).toLocaleDateString('fr-FR')}`}
                                 </H1>
+                                <div className="adress">
+                                    <H1>
+                                        <i className="fas fa-map"></i> {bar.address}
+                                    </H1>
+                                    <H1>
+                                        {bar.zipcode} {bar.city}
+                                    </H1>
+                                </div>
                                 <H1>
-                                    {bar.zipcode} {bar.city}
+                                    <i className="fas fa-phone-alt"></i> {bar.phone_number}
                                 </H1>
+                                {(bar.website || bar.sm_fb || bar.sm_inst) && (
+                                    <>
+                                        {bar.website && (
+                                            <H1>
+                                                <a href={bar.website} target="_blank" rel="noopener noreferrer">
+                                                    Site web
+                                                </a>
+                                            </H1>
+                                        )}
+                                        {bar.sm_fb && (
+                                            <H1>
+                                                <FaFacebook />{' '}
+                                                <a href={bar.sm_fb} target="_blank" rel="noopener noreferrer">
+                                                    Page Facebook
+                                                </a>
+                                            </H1>
+                                        )}
+                                        {bar.sm_inst && (
+                                            <H1>
+                                                <FaInstagram />{' '}
+                                                <a href={bar.sm_inst} target="_blank" rel="noopener noreferrer">
+                                                    Page Instagram
+                                                </a>
+                                            </H1>
+                                        )}
+                                    </>
+                                )}
                             </div>
-                            <H1>
-                                <i className="fas fa-phone-alt"></i> {bar.phone_number}
-                            </H1>
-                            {(bar.website || bar.sm_fb || bar.sm_inst) && (
-                                <>
-                                    {bar.website && (
-                                        <H1>
-                                            <a href={bar.website} target="_blank" rel="noopener noreferrer">
-                                                Site web
-                                            </a>
-                                        </H1>
-                                    )}
-                                    {bar.sm_fb && (
-                                        <H1>
-                                            <FaFacebook />{' '}
-                                            <a href={bar.sm_fb} target="_blank" rel="noopener noreferrer">
-                                                Page Facebook
-                                            </a>
-                                        </H1>
-                                    )}
-                                    {bar.sm_inst && (
-                                        <H1>
-                                            <FaInstagram />{' '}
-                                            <a href={bar.sm_inst} target="_blank" rel="noopener noreferrer">
-                                                Page Instagram
-                                            </a>
-                                        </H1>
-                                    )}
-                                </>
-                            )}
                         </div>
-                    </div>
-                </Section>
-                <p>
-                    Il reste{' '}
-                    {Math.ceil((new Date(bar.end_of_season).getTime() - new Date().getTime()) / 86400000)} jours
-                    avant la fin de la saison.
-                </p>
-
+                        <p>
+                            Il reste{' '}
+                            {Math.ceil((new Date(bar.end_of_season).getTime() - new Date().getTime()) / 86400000)} jours
+                            avant la fin de la saison.
+                        </p>
+                    </Section>
+                ))}
                 <Section className="next-tournaments">
                     <H1>Prochains Tournois</H1>
                     {barTournaments.map((tournament) => (
@@ -128,17 +129,17 @@ export default function Bar({ bar, barTournaments, ranking }) {
     );
 }
 
-export async function barDetails(context) {
+export async function getServerSideProps(context) {
     const barId = context.params.id;
     //console.log("ID du bar :", barId);
 
-    const [bar] = await database.query(`
+    const [bars] = await database.query(`
         SELECT * FROM bar
         WHERE id = ?
     `, [barId]);
     //console.log(`Bar avec l'ID ${barId} : `, bar);
     // Si aucun résultat n'est trouvé
-    if (!bar || bar.length === 0) {
+    if (!bars || bars.length === 0) {
         return {
             notFound: true,
         };
@@ -162,14 +163,13 @@ export async function barDetails(context) {
         ORDER BY score DESC
         LIMIT 14;
     `, [barId])
-    JSON.stringify(bar, barTournaments, ranking)
-    console.log(bar.logo)
-    console.log("Bar : ", bar)
+    JSON.stringify(bars, barTournaments, ranking)
+    console.log("Bar : ", bars)
     console.log("Tournois du bar : ", barTournaments)
     console.log("Classement : ", ranking)
     return {
         props: {
-            bar, barTournaments, ranking
+            bars, barTournaments, ranking
         },
     };
 }
