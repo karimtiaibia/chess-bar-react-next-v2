@@ -131,13 +131,13 @@ export async function getServerSideProps(context) {
     const barId = context.params.id;
     //console.log("ID du bar :", barId);
 
-    const [bars] = await database.query(`
+    const [bar] = await database.query(`
         SELECT * FROM bar
         WHERE id = ?
     `, [barId]);
     //console.log(`Bar avec l'ID ${barId} : `, bar);
     // Si aucun résultat n'est trouvé
-    if (!bars || bars.length === 0) {
+    if (!bar || bar.length === 0) {
         return {
             notFound: true,
         };
@@ -161,13 +161,13 @@ export async function getServerSideProps(context) {
         ORDER BY score DESC
         LIMIT 14;
     `, [barId])
-    JSON.stringify(bars, barTournaments, ranking)
-    console.log("Bar : ", bars)
+    JSON.stringify(bar, barTournaments, ranking)
+    console.log("Bar : ", bar)
     console.log("Tournois du bar : ", barTournaments)
     console.log("Classement : ", ranking)
     return {
         props: {
-            bars, barTournaments, ranking
+            bar, barTournaments, ranking
         },
     };
 }
