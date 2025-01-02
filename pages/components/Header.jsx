@@ -169,7 +169,7 @@ const Menu = ({ active }) => {
 const Header = () => {
     const [userStatus, setUserStatus] = useState("notAuthenticated");
     const [menuActive, setMenuActive] = useState(false);
-    const [loading, setLoading] = useState(true);
+    /*const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUserStatus = async () => {
@@ -189,19 +189,7 @@ const Header = () => {
         };
 
         fetchUserStatus();
-    }, []);
-
-    const logoutHandler = async (e) => {
-        e.preventDefault();
-        try {
-            await fetch("/api/logout", { method: "POST" });
-            window.location.href = "/";
-        } catch (error) {
-            console.error("Erreur lors de la déconnexion :", error);
-        }
-    };
-
-    if (loading) return <p>Chargement...</p>;
+    }, []);*/
     
     return (
         <StyledHeader>

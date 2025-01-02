@@ -83,9 +83,9 @@ export default function Bar({ bar, barTournaments, ranking }) {
                                 <div>
                                     <h4>{ tournament.nb_places_disponibles } { " places disponibles "}</h4>
                                     <form   //action={`/bar/${ bar.id }/${ tournament.id }/${ locals.session.user.id }/registered`} 
-                                            onsubmit="return confirm(`Êtes-vous sûr de vouloir vous inscrire à ce tournoi ?`)"
+                                            onSubmit="return confirm(`Êtes-vous sûr de vouloir vous inscrire à ce tournoi ?`)"
                                             method="POST">
-                                        <Button type="submit" className="tournament-registered buttoncheck">S'inscrire</Button>
+                                        <Button className="tournament-registered buttoncheck">S'inscrire</Button>
                                     </form>
                                 </div>
                             ) : (

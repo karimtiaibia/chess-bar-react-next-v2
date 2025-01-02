@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 // Styles
-import { H1, Form, Label } from "./Typefaces";
-import { Button } from "./Button";
-import { Section } from "./Section";
+import { H1, Form, Label } from "../components/common/Typefaces";
+import { Button } from "../components/common/Button";
+import { Section } from "../components/common/Section";
 // Imported icons
 import { CiUser, CiAt } from "react-icons/ci";
 import { PiKey } from "react-icons/pi";

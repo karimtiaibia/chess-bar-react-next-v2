@@ -94,51 +94,46 @@ export default function Searchbar({ bars }) {
     };
     
     return (
-        <>
-            <Section>
-                <Search>
-                    <InputTitle>Rechercher lieu, bar, ville...</InputTitle>
-                    <Input 
-                        key=""
-                        id="searchbar"
-                        type="text"
-                        placeholder="Rechercher..."
-                        value={searchQuery}
-                        onChange={handleInputChange} 
-                    />
-                </Search>
-            
-            {/* <Section> */}
-                <Cards>
-                    {bars.map((bar) => (
-                        <Link key={bar.id} href={`/bars/${bar.id}`} passHref>
-                            <Card
-                                onMouseEnter={() => setHoveredCard(bar.id)}
-                                onMouseLeave={() => setHoveredCard(null)}
-                                $isHovered={hoveredCard === bar.id}
-                                $hoveredCard={hoveredCard}
-                                ref={(el) => (resultsRef.current[bar.id] = el)}
-                                style={{ display: "none" }}
-                            >
-                                <Placeholder>
-                                    <Image
-                                        src={`/img/${bar.logo}`}
-                                        fill
-                                        size="auto"
-                                        priority={false}
-                                        alt={`Logo du bar ${bar.name}`}
-                                    />
-                                </Placeholder>
-                                <CardInfos>
-                                    <H1>{bar.name}</H1>
-                                    <H2>{bar.adress}, {bar.zipcode}, {bar.city}</H2>
-                                </CardInfos>
-                            </Card>
-                        </Link>
-                    ))}
-                </Cards>
-            {/* </Section> */}
-            </Section>
-        </>
+        <Section>
+            <Search>
+                <InputTitle>Rechercher lieu, bar, ville...</InputTitle>
+                <Input 
+                    key=""
+                    id="searchbar"
+                    type="text"
+                    placeholder="Rechercher..."
+                    value={searchQuery}
+                    onChange={handleInputChange} 
+                />
+            </Search>
+            <Cards>
+                {bars.map((bar) => (
+                    <Link key={bar.id} href={`/bars/${bar.id}`} passHref>
+                        <Card
+                            onMouseEnter={() => setHoveredCard(bar.id)}
+                            onMouseLeave={() => setHoveredCard(null)}
+                            $isHovered={hoveredCard === bar.id}
+                            $hoveredCard={hoveredCard}
+                            ref={(el) => (resultsRef.current[bar.id] = el)}
+                            style={{ display: "none" }}
+                        >
+                            <Placeholder>
+                                <Image
+                                    src={`/img/${bar.logo}`}
+                                    fill
+                                    size="auto"
+                                    priority={false}
+                                    alt={`Logo du bar ${bar.name}`}
+                                />
+                            </Placeholder>
+                            <CardInfos>
+                                <H1>{bar.name}</H1>
+                                <H2>{bar.adress}, {bar.zipcode}, {bar.city}</H2>
+                            </CardInfos>
+                        </Card>
+                    </Link>
+                ))}
+            </Cards>
+        </Section>
     );
 }

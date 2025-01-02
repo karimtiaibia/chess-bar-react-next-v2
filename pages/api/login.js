@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { serialize } from "cookie";
 
 const UserLogin = z.object({
-    name: z.string().min(1, "Le champ 'name' est obligatoire."),
+    email: z.string().min(1, "Le champ 'email' est obligatoire."),
     password: z.string().min(1, "Le champ 'password' est obligatoire."),
 });
 
@@ -24,13 +24,13 @@ export default async function loginHandler(req, res) {
         });
     }
 
-    const { name, password } = validatedFields.data;
+    const { email, password } = validatedFields.data;
 
     try {
         const [users] = await database.query(`
             SELECT * FROM user 
-            WHERE name = ?
-        `, [name]);
+            WHERE email = ?
+        `, [email]);
 
         if (users.length === 0) {
             return res.status(400).json({ error: "Identifiants invalides !" });

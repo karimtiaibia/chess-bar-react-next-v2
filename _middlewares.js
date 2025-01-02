@@ -1,55 +1,26 @@
-// Middleware pour bloquer l'accès aux pages connectées 
+'use server'
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { decrypt } from "./lib/session";
 
-// middleware/isConnected.js
-import { NextResponse } from 'next/server';
+const protectedRoutes = ["/admin"];
+const publicRoutes = ["/login"];
 
-export function isConnected(req) {
-    const token = req.cookies.get('authToken'); // Supposons que le token d'authentification est stocké dans un cookie
+export default async function middleware(req) {
+    const path = req.nextUrl.pathname;
+    const isProtectedRoute = protectedRoutes.includes(path);
+    const isPublicRoute = publicRoutes.includes(path);
 
-    if (!token) {
-        // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
-        return NextResponse.redirect(new URL('/login', req.url));
+    const cookie = cookies().get("session")?.value;
+    const session = await decrypt(cookie);
+
+    if (isProtectedRoute && !session?.userId) {
+        return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
 
-        // Vérifier la validité du token (par exemple en décryptant ou en appelant une API externe)
-        // Exemple basique : on peut ajouter des vérifications supplémentaires ici
-
-        // Si tout est OK, permettre l'accès
-        return NextResponse.next();
-}
-
-// Configurer le middleware pour les routes nécessaires
-export const config = {
-    matcher: ['/protected-route/:path*'], // Remplacez par les routes où le middleware doit s'appliquer
-};
-
-
-// Middleware pour bloquer l'accès aux pages admin 
-// middleware/isAdmin.js
-
-export function isAdmin(req) {
-    const token = req.cookies.get('authToken'); // Supposons que le token d'authentification est stocké dans un cookie
-
-    if (!token) {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
-    return NextResponse.redirect(new URL('/login', req.url));
+    if (isPublicRoute && session?.userId) {
+        return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
     }
 
-    // Exemple de vérification des rôles utilisateur
-    try {
-        const user = JSON.parse(atob(token.split('.')[1])); // Décoder le payload JWT (remplacez cette logique si nécessaire)
-
-        if (user.role !== 'admin') {
-            // Rediriger si l'utilisateur n'a pas le rôle administrateur
-            return NextResponse.redirect(new URL('/not-authorized', req.url));
-        }
-    } catch (err) {
-        console.error('Erreur lors de la vérification du token:', err);
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.next();
 }
-
-// Si tout est OK, permettre l'accès
-return NextResponse.next();
-
-}
-

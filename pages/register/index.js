@@ -1,4 +1,4 @@
-import RegisterForm from '../components/common/RegisterForm';
+import RegisterForm from "./RegisterForm";
 export const Metadata = {
     title: 'S\'inscrire',
 };
