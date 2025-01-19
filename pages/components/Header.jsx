@@ -62,7 +62,7 @@ const Li = styled.li`
             color: ${_var.grayscale[900]};
         }
     `}
-`;
+`; 
 
 const BurgerContainer = styled.div`
     position: relative;
